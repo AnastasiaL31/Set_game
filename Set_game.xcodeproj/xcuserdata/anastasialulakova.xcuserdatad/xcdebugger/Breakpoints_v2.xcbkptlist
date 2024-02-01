@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "BBF22F36-9BAA-4F58-A738-C2085ED08B4B"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FDF56832-D5B6-451B-8725-D184F468CA0E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "addOneMoreCard(at:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "addOneMoreCard(at:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD - b20b4772347249ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Set_game.SetGame.addOneMoreCard(at: Swift.Int) -&gt; ()"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "97">
+               </Location>
+               <Location
+                  uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD - 1a7ec05c756336ad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Set_game.Card) -&gt; Swift.Bool in Set_game.SetGame.addOneMoreCard(at: Swift.Int) -&gt; ()"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "90F4BA52-85DC-46DF-B62A-9F5914C1EBCC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "choose(card:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "90F4BA52-85DC-46DF-B62A-9F5914C1EBCC - 3ce9b24ae3f055ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Set_game.SetGame.choose(card: Set_game.Card) -&gt; Swift.Optional&lt;Swift.Bool&gt;"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "1401">
+               </Location>
+               <Location
+                  uuid = "90F4BA52-85DC-46DF-B62A-9F5914C1EBCC - e149065862ae3901"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Set_game.Card) -&gt; () in Set_game.SetGame.choose(card: Set_game.Card) -&gt; Swift.Optional&lt;Swift.Bool&gt;"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "337">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DF482211-EB83-43D5-A0C3-C179F0AB646B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "choose(card:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
