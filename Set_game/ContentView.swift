@@ -10,12 +10,11 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: SetGameVM
+    let aspectRatio : CGFloat = 3/2
+    
     var body: some View {
         VStack{
-            ScrollView{
                 cards
-            }
-            
             HStack{
                 AddCardsButton
                 Spacer()
@@ -27,23 +26,13 @@ struct ContentView: View {
     }
     
     var cards: some View {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 150))]) {
-                ForEach(viewModel.cards){ card in
-                    if viewModel.isSetSelected && !viewModel.isSetMatched {
-                        CardView(card: card, mismatch: true)
-                            .aspectRatio(3/2, contentMode: .fit)
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
+                        CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
                             .onTapGesture {
                                 viewModel.choose(card: card)
                             }
-                    }else {
-                        CardView(card: card)
-                            .aspectRatio(3/2, contentMode: .fit)
-                            .onTapGesture {
-                                viewModel.choose(card: card)
-                            }
-                    }
+                            .padding(4)
                 }
-        }
     }
     
     var AddCardsButton : some View {

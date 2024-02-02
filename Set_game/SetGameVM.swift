@@ -27,9 +27,9 @@ class SetGameVM : ObservableObject{
     }
     
     func addThreeMoreCards(){
-        //check for sets
-        
-        setGame.addThreeMoreCards()
+        if cards.count < 24{
+            setGame.addThreeMoreCards()
+        }
     }
     
     

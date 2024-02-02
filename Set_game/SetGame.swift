@@ -60,42 +60,35 @@ struct SetGame {
         if cards.contains(where: {!$0.isShown}) {
             var count = 0
             while count < 3 {
-                let randomIndex = Int.random(in: cards.indices)
-                if !cards[randomIndex].isShown {
-                    cards[randomIndex].isShown.toggle()
-                    if addingIndexes.count > 0 {
-                        cards.insert(cards[randomIndex], at: addingIndexes[count])
-                    }
+                if var cardWithIndexToAdd = getNotShownCard(){
+                    cards[cardWithIndexToAdd.index].isShown.toggle()
                     count += 1
+                } else {
+                    return
                 }
             }
         }
     }
     
-    func GetNotShownCard() -> Card? {
+    func getNotShownCard() -> (card: Card, index: Int)? {
         if cards.contains(where: {!$0.isShown}) {
             while true {
                 let randomIndex = Int.random(in: cards.indices)
                 if !cards[randomIndex].isShown {
-                    return cards[randomIndex]
+                    return (card: cards[randomIndex], index: randomIndex)
                 }
             }
         }
         return nil
     }
     
-    mutating func addOneMoreCard(at index: Int) {
+    mutating func replaceWithOneNewCard(at index: Int) {
         if cards.contains(where: {!$0.isShown}) {
             if cards.indices.contains(index) {
-                while true {
-                    let randomIndex = Int.random(in: cards.indices)
-                    if !cards[randomIndex].isShown {
-                        var selectedCard = cards[randomIndex]
-                        selectedCard.isShown = true
-                        cards.insert(selectedCard, at: index)
-                        cards.remove(at: randomIndex)
-                        return
-                    }
+                if var cardWithIndexToAdd = getNotShownCard(){
+                    cardWithIndexToAdd.card.isShown = true
+                    cards.insert(cardWithIndexToAdd.card, at: index)
+                    cards.remove(at: cardWithIndexToAdd.index)
                 }
             }
         }
@@ -103,12 +96,12 @@ struct SetGame {
     
     mutating func choose(card: Card) -> Bool? {
         if numberOfChosenCards < 3 {
-            if let index = cards.firstIndex(where: {$0.id == card.id}){
+            if let index = cards.findCardIndex(card: card){
                 cards[index].isChosen.toggle()
                 if numberOfChosenCards == 3 {
                     if checkForSet(){
                         chosenCards.forEach { card in
-                            if let realCardIndex = cards.firstIndex(where: {$0.id == card.id}) {
+                            if let realCardIndex = cards.findCardIndex(card: card) {
                                 cards[realCardIndex].isMatched = true
                             }
                         }
@@ -120,12 +113,12 @@ struct SetGame {
             }
         } else {
             chosenCards.forEach { card in
-                if let realCardIndex = cards.firstIndex(where: {$0.id == card.id}) {
+                if let realCardIndex = cards.findCardIndex(card: card) {
                     if cards[realCardIndex].isMatched {
-                        if let card = GetNotShownCard() {
-                            cards[realCardIndex] = card
+                        if let notShownCardWithIndex = getNotShownCard() {
+                            cards[realCardIndex] = notShownCardWithIndex.card
                             cards[realCardIndex].isShown = true
-                            cards.removeAll(where: {$0 == card})
+                            cards.removeAll(where: {$0 == notShownCardWithIndex.card})
                         }else {
                             cards.remove(at: realCardIndex)
                         }
@@ -134,12 +127,9 @@ struct SetGame {
                     }
                 }
             }
-            if let index = cards.firstIndex(where: {$0.id == card.id}){
+            if let index = cards.findCardIndex(card: card){
                 cards[index].isChosen.toggle()
             }
-//            if addingIndexes.count > 0 {
-//                addThreeMoreCards(addingIndexes: addingIndexes)
-//            }
         }
         return nil
     }
@@ -260,5 +250,13 @@ struct CardContent : Equatable, CustomDebugStringConvertible{
         case .three:
             return result + "3"
         }
+    }
+}
+
+
+extension Array<Card> {
+    
+    func findCardIndex(card: Card) -> Int?{
+         firstIndex(where: {$0.id == card.id})
     }
 }
