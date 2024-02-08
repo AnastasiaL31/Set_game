@@ -60,7 +60,7 @@ struct SetGame {
         if cards.contains(where: {!$0.isShown}) {
             var count = 0
             while count < 3 {
-                if var cardWithIndexToAdd = getNotShownCard(){
+                if let cardWithIndexToAdd = getNotShownCard(){
                     cards[cardWithIndexToAdd.index].isShown.toggle()
                     count += 1
                 } else {
@@ -115,13 +115,7 @@ struct SetGame {
             chosenCards.forEach { card in
                 if let realCardIndex = cards.findCardIndex(card: card) {
                     if cards[realCardIndex].isMatched {
-                        if let notShownCardWithIndex = getNotShownCard() {
-                            cards[realCardIndex] = notShownCardWithIndex.card
-                            cards[realCardIndex].isShown = true
-                            cards.removeAll(where: {$0 == notShownCardWithIndex.card})
-                        }else {
                             cards.remove(at: realCardIndex)
-                        }
                     }else {
                         cards[realCardIndex].isChosen = false
                     }
@@ -135,16 +129,11 @@ struct SetGame {
     }
     
     func checkForSet() -> Bool{
-        var numbers : Set<Int>  = []
-        var shapes : Set<CardContent.Shape> = []
-        var shadings : Set<CardContent.Shading>  = []
-        var colors : Set<CardContent.ShapeColor>  = []
-        chosenCards.forEach{
-            numbers.insert($0.content.numberOfShapes.numOfShapes)
-            shapes.insert($0.content.shape)
-            shadings.insert($0.content.shading)
-            colors.insert($0.content.color)
-        }
+        
+        let colors = Set(chosenCards.map({ $0.content.color}))
+        let numbers = Set(chosenCards.map({ $0.content.numberOfShapes}))
+        let shapes = Set(chosenCards.map({ $0.content.shape}))
+        let shadings = Set(chosenCards.map({ $0.content.shading}))
         return numbers.count != 2 && shapes.count != 2 && shadings.count != 2 && colors.count != 2
         }
     
