@@ -30,9 +30,12 @@ struct SetGame {
         content = []
         CreateCardsContent()
         for numberOnCard in content.indices{
-            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))    
+            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
         }
         cards.shuffle()
+        for num in 0..<12 {
+            cards[num].isShown = true
+        }
     }
     
     private mutating func CreateCardsContent(){
@@ -47,6 +50,8 @@ struct SetGame {
         }
     }
     
+    // MARK: - add creation of new cards (previous were deleted)
+    
      mutating func startNewGame(){
          cards.shuffle()
          cards.indices.forEach {
@@ -60,8 +65,8 @@ struct SetGame {
         if cards.contains(where: {!$0.isShown}) {
             var count = 0
             while count < 3 {
-                if let cardWithIndexToAdd = getNotShownCard(){
-                    cards[cardWithIndexToAdd.index].isShown.toggle()
+                if let cardWithIndexToAdd = cards.firstIndex(where: {!$0.isShown}){
+                    cards[cardWithIndexToAdd].isShown.toggle()
                     count += 1
                 } else {
                     return
@@ -82,18 +87,7 @@ struct SetGame {
         return nil
     }
     
-    mutating func replaceWithOneNewCard(at index: Int) {
-        if cards.contains(where: {!$0.isShown}) {
-            if cards.indices.contains(index) {
-                if var cardWithIndexToAdd = getNotShownCard(){
-                    cardWithIndexToAdd.card.isShown = true
-                    cards.insert(cardWithIndexToAdd.card, at: index)
-                    cards.remove(at: cardWithIndexToAdd.index)
-                }
-            }
-        }
-    }
-    
+   
     mutating func choose(card: Card) -> Bool? {
         if numberOfChosenCards < 3 {
             if let index = cards.findCardIndex(card: card){
@@ -139,7 +133,7 @@ struct SetGame {
     
 }
 
-struct Card : Equatable, Identifiable{
+struct Card : Equatable, Identifiable {
     
     let id: Int
     let content: CardContent

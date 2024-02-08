@@ -11,12 +11,16 @@ import SwiftUI
 
 class SetGameVM : ObservableObject{
     
-    @Published private var setGame: SetGame = SetGame()
+    @Published private var setGame: SetGame
     
     var cards: Array<Card> {
         return setGame.cards.filter { card in
             card.isShown == true
         }
+    }
+    
+    init(){
+        setGame = SetGame()
     }
     
     var isSetSelected = false

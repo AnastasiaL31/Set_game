@@ -10,13 +10,17 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: SetGameVM
-    let aspectRatio : CGFloat = 3/2
+    private let aspectRatio : CGFloat = 3/2
+    private let dealAnimation: Animation = .easeInOut(duration: 0.5)
+    
     
     var body: some View {
         VStack{
                 cards
             HStack{
-                AddCardsButton
+                discardPile
+                Spacer()
+                deck.foregroundColor(.blue)
                 Spacer()
                 NewGameButton
             }
@@ -26,26 +30,112 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
-                        CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
-                            .onTapGesture {
-                                viewModel.choose(card: card)
-                            }
-                            .padding(4)
-                }
+       AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
+            if isDealt(card){
+                CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                    .matchedGeometryEffect(id: card.id, in: discardNamespace)
+                    .onTapGesture {
+                        choose(card)
+                        }
+                    .padding(4)
+                    }
+                    
+            }
+        }
+    
+    func choose(_ card: Card){
+       var delay: TimeInterval = viewModel.isSetSelected && viewModel.isSetMatched ? 0.2 : 0
+       var duration : TimeInterval = viewModel.isSetSelected && viewModel.isSetMatched ? 0.5 : 0
+       withAnimation(.easeInOut(duration: duration).delay(delay))
+       {
+           discard()
+           viewModel.choose(card: card)
+       }
+   }
+    
+   
+     
+    
+    @Namespace private var dealingNamespace
+    
+    @State private var dealtCards = Set<Card.ID>()
+    
+    private func isDealt(_ card: Card) -> Bool {
+        dealtCards.contains(card.id)
     }
     
-    var AddCardsButton : some View {
-        Button(action: {
-            viewModel.addThreeMoreCards()
-        }, label: {
-            Text("Add 3 cards")
-        })
+    private var undealtCards : [Card] {
+        viewModel.cards.filter { !isDealt($0) }
     }
-
+    
+  
+    
+    var deck : some View {
+        ZStack {
+            ForEach(undealtCards) { card in
+                    CardView(card: card)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+            }
+                RoundedRectangle(cornerRadius: 12)
+                .opacity(dealtCards.count < 81 ? 1 : 0)
+        }
+        
+        .frame(width: 100, height: 100/aspectRatio)
+        .onTapGesture {
+            if dealtCards.count > 0 {
+                viewModel.addThreeMoreCards()
+            }
+            deal()
+        }
+    }
+    
+    private func deal(){
+        var timeInterval: TimeInterval = 0
+        for card in undealtCards {
+            if card.isShown {
+                withAnimation(.easeOut(duration: 0.5).delay(timeInterval)){
+                    _ = dealtCards.insert(card.id)
+                }
+                timeInterval += 0.15
+            }
+        }
+    }
+    
+    @Namespace private var discardNamespace
+    
+    @State private var discardedCards = [Card]()
+    
+    var discardPile: some View {
+        ZStack {
+            ForEach(discardedCards) { card in
+                    CardView(card: card)
+                    .matchedGeometryEffect(id: card.id, in: discardNamespace)
+            }
+           
+        }
+        .frame(width: 100, height: 100/aspectRatio)
+    }
+    
+    
+    private func discard() {
+        var delay: TimeInterval = 0
+        if viewModel.isSetSelected && viewModel.isSetMatched {
+            for card in viewModel.cards{
+                if card.isChosen{
+                    withAnimation(.easeOut(duration: 0.5).delay(delay)){
+                        discardedCards.append(card)
+                    }
+                    delay += 0.25
+                }
+            }
+        }
+    }
+    
     var NewGameButton : some View {
         Button(action: {
             viewModel.startNewGame()
+            dealtCards.removeAll()
         }, label: {
             Text("New Game")
         })
@@ -65,7 +155,6 @@ struct CardView:View {
             ZStack {
                 let base = RoundedRectangle(cornerRadius: 12)
                 let numberOfShapes: Int = card.content.numberOfShapes.numOfShapes
-                
                 Group{
                     base.foregroundColor(.white)
                     base.strokeBorder((card.isChosen ? .orange : .black), lineWidth: 2)
