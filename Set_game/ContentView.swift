@@ -30,31 +30,39 @@ struct ContentView: View {
     }
     
     var cards: some View {
-       AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
-            if isDealt(card){
-                CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
-                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
-                    .matchedGeometryEffect(id: card.id, in: discardNamespace)
-                    .onTapGesture {
-                        choose(card)
+        withAnimation(.easeIn(duration: 0.5)){
+            AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
+                if isDealt(card){
+                    CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
+                        .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                        .matchedGeometryEffect(id: card.id, in: discardNamespace)
+                        .onTapGesture {
+                            choose(card)
                         }
-                    .padding(4)
-                    }
-                    
+                        .padding(4)
+                }
+                
             }
         }
+    }
     
-    func choose(_ card: Card){
-       var delay: TimeInterval = viewModel.isSetSelected && viewModel.isSetMatched ? 0.2 : 0
-       var duration : TimeInterval = viewModel.isSetSelected && viewModel.isSetMatched ? 0.5 : 0
-       withAnimation(.easeInOut(duration: duration).delay(delay))
+     func choose(_ card: Card){
+        let duration : TimeInterval = viewModel.isSetSelected && viewModel.isSetMatched ? 0.5 : 0
+       withAnimation(.easeInOut(duration: duration))
        {
-           discard()
+           if viewModel.isSetSelected && viewModel.isSetMatched {
+               for card in viewModel.cards{
+                   if card.isChosen{
+                       chosenMatchedCards.append(card)
+                   }
+               }
+               discard()
+           }
            viewModel.choose(card: card)
        }
    }
     
-   
+    @State private var chosenMatchedCards: Array<Card> = []
      
     
     @Namespace private var dealingNamespace
@@ -83,11 +91,32 @@ struct ContentView: View {
         
         .frame(width: 100, height: 100/aspectRatio)
         .onTapGesture {
+            dealCards()
+        }
+    }
+    
+    
+    private func dealCards(){
             if dealtCards.count > 0 {
-                viewModel.addThreeMoreCards()
+                if viewModel.isSetSelected && viewModel.isSetMatched {
+                    for card in viewModel.cards{
+                        if card.isChosen{
+                            chosenMatchedCards.append(card)
+                        }
+                    }
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        discard()
+                    }
+                    withAnimation (.easeInOut(duration: 0.5).delay(1)) {
+                        viewModel.addThreeMoreCards(replace: true)
+                        deal()
+                        return
+                    }
+                }else{
+                    viewModel.addThreeMoreCards(replace: false)
+                }
             }
             deal()
-        }
     }
     
     private func deal(){
@@ -119,23 +148,20 @@ struct ContentView: View {
     
     
     private func discard() {
-        var delay: TimeInterval = 0
-        if viewModel.isSetSelected && viewModel.isSetMatched {
-            for card in viewModel.cards{
-                if card.isChosen{
-                    withAnimation(.easeOut(duration: 0.5).delay(delay)){
+           for card in chosenMatchedCards{
+                    withAnimation(.easeInOut(duration: 0.5)){
                         discardedCards.append(card)
                     }
-                    delay += 0.25
-                }
-            }
-        }
+           }
+        chosenMatchedCards.removeAll()
     }
     
     var NewGameButton : some View {
         Button(action: {
             viewModel.startNewGame()
             dealtCards.removeAll()
+            discardedCards.removeAll()
+            
         }, label: {
             Text("New Game")
         })

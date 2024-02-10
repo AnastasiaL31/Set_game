@@ -28,10 +28,18 @@ class SetGameVM : ObservableObject{
     
     func startNewGame(){
         setGame.startNewGame()
+        isSetMatched = false
+        isSetSelected = false
     }
     
-    func addThreeMoreCards(){
-        if cards.count < 24{
+    func addThreeMoreCards(replace: Bool){
+        if replace {
+            if isSetSelected && isSetMatched{
+                setGame.addAndReplaceThreeMoreCards()
+                isSetSelected = false
+                isSetMatched = false
+            }
+        }else if cards.count < 24 {
             setGame.addThreeMoreCards()
         }
     }

@@ -10,8 +10,8 @@ import SwiftUI
 
 struct SetGame {
     
-    private(set) var cards: Array<Card>
-    private var content: Array<CardContent>
+    private(set) var cards: Array<Card> = []
+    private var content: Array<CardContent> = []
     
     private var numberOfChosenCards: Int {
         get{
@@ -26,16 +26,8 @@ struct SetGame {
     }
     
     init() {
-        cards = []
-        content = []
-        CreateCardsContent()
-        for numberOnCard in content.indices{
-            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
-        }
-        cards.shuffle()
-        for num in 0..<12 {
-            cards[num].isShown = true
-        }
+        createCards()
+        
     }
     
     private mutating func CreateCardsContent(){
@@ -50,18 +42,27 @@ struct SetGame {
         }
     }
     
+    
+    private mutating func createCards(){
+        cards.removeAll()
+        content.removeAll()
+        CreateCardsContent()
+        for numberOnCard in content.indices{
+            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
+        }
+        cards.shuffle()
+        for num in 0..<12 {
+            cards[num].isShown = true
+        }
+    }
+    
     // MARK: - add creation of new cards (previous were deleted)
     
      mutating func startNewGame(){
-         cards.shuffle()
-         cards.indices.forEach {
-             cards[$0].isShown = ($0 < 12)
-             cards[$0].isChosen = false
-             cards[$0].isMatched = false
-         }
+         createCards()
     }
     
-    mutating func addThreeMoreCards(addingIndexes: Array<Int> = []){
+    mutating func addThreeMoreCards(){
         if cards.contains(where: {!$0.isShown}) {
             var count = 0
             while count < 3 {
@@ -75,19 +76,31 @@ struct SetGame {
         }
     }
     
-    func getNotShownCard() -> (card: Card, index: Int)? {
-        if cards.contains(where: {!$0.isShown}) {
-            while true {
-                let randomIndex = Int.random(in: cards.indices)
-                if !cards[randomIndex].isShown {
-                    return (card: cards[randomIndex], index: randomIndex)
+    mutating func addAndReplaceThreeMoreCards(){
+        let replacingIndexes = getChosenMatchedCards()
+        if replacingIndexes.count == 3 {
+            if cards.contains(where: {!$0.isShown}) {
+                var count = 0
+                while count < 3 {
+                    if let cardIndexToAdd = cards.firstIndex(where: {!$0.isShown}){
+                        var card = cards[cardIndexToAdd]
+                        card.isShown.toggle()
+                        cards[replacingIndexes[count]] = card
+                        cards.remove(at: cardIndexToAdd)
+                        count += 1
+                    } else {
+                        return
+                    }
                 }
             }
         }
-        return nil
     }
     
-   
+    func getChosenMatchedCards() -> Array<Int> {
+        cards.filter { $0.isChosen && $0.isMatched && $0.isShown}.map{cards.firstIndex(of: $0) ?? -1}
+    }
+    
+    
     mutating func choose(card: Card) -> Bool? {
         if numberOfChosenCards < 3 {
             if let index = cards.findCardIndex(card: card){
