@@ -51,7 +51,7 @@ struct SetGame {
             cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
         }
         cards.shuffle()
-        for num in 0..<12 {
+        for num in 0..<9 {
             cards[num].isShown = true
         }
     }

@@ -30,7 +30,6 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        withAnimation(.easeIn(duration: 0.5)){
             AspectVGrid(viewModel.cards, aspectRatio: aspectRatio){ card in
                 if isDealt(card){
                     CardView(card: card, mismatch: (viewModel.isSetSelected && !viewModel.isSetMatched) ? true : nil)
@@ -39,11 +38,12 @@ struct ContentView: View {
                         .onTapGesture {
                             choose(card)
                         }
+                        
                         .padding(4)
                 }
                 
             }
-        }
+          
     }
     
      func choose(_ card: Card){
@@ -104,11 +104,13 @@ struct ContentView: View {
                             chosenMatchedCards.append(card)
                         }
                     }
-                    withAnimation(.easeInOut(duration: 0.5)) {
+                    //withAnimation(.easeInOut(duration: 0.2)) {
                         discard()
-                    }
-                    withAnimation (.easeInOut(duration: 0.5).delay(1)) {
+                    //}
+                    withAnimation (.easeInOut(duration: 1).delay(3)) {
                         viewModel.addThreeMoreCards(replace: true)
+                    }
+                    withAnimation (.easeInOut(duration: 0.5)) {
                         deal()
                         return
                     }
@@ -149,7 +151,7 @@ struct ContentView: View {
     
     private func discard() {
            for card in chosenMatchedCards{
-                    withAnimation(.easeInOut(duration: 0.5)){
+                    withAnimation(.easeInOut(duration: 0.3)){
                         discardedCards.append(card)
                     }
            }
@@ -177,38 +179,63 @@ struct CardView:View {
     }
     var mismatch: Bool?
     
-    var body: some View{
-            ZStack {
-                let base = RoundedRectangle(cornerRadius: 12)
-                let numberOfShapes: Int = card.content.numberOfShapes.numOfShapes
-                Group{
-                    base.foregroundColor(.white)
-                    base.strokeBorder((card.isChosen ? .orange : .black), lineWidth: 2)
-                    if card.isChosen && card.isMatched {
-                        base.strokeBorder(.cyan, lineWidth: 3)
-                    }else if card.isChosen {
-                        if mismatch != nil {
-                            base.strokeBorder(.pink, lineWidth: 3)
-                        }
-                    }
-                        
-                    HStack {
-                        ForEach((1...numberOfShapes), id: \.self){ index in
-                            switch card.content.shape {
-                            case .diamond:
-                                diamond
-                            case .squiggle:
-                                squiggle
-                            case .oval:
-                                oval
-                            }
-                        }
-                    }
-                    
-                    .padding()
-                    
-                }
+    var strokeColor: Color {
+        if card.isChosen {
+            if card.isMatched {
+                return .cyan
+            }
+            else if mismatch != nil {
+                return .pink
+            }
+            return .orange
         }
+        return .black
+    }
+    
+    
+    @ViewBuilder
+    var body: some View {
+        cardBase
+        .animation(.easeOut(duration: 0.5))
+        
+    }
+    
+
+    var cardBase: some View {
+        ZStack {
+            let base = RoundedRectangle(cornerRadius: 12)
+            base.foregroundColor(.white)
+            base.strokeBorder(.black, lineWidth: 2)
+                .overlay {
+                    let strokeBase =                         base.strokeBorder(strokeColor, lineWidth: 2)
+
+                    if card.isChosen && (card.isMatched || mismatch != nil){
+                        strokeBase
+                            .transition(.asymmetric(insertion: .scale(scale: 0.5).animation(.easeIn(duration: 0.5)), removal: .identity) )
+                    }else{
+                        strokeBase
+                    }
+                }
+            cardContent
+        }
+    }
+    
+    var cardContent: some View {
+        HStack {
+            let numberOfShapes: Int = card.content.numberOfShapes.numOfShapes
+
+            ForEach((1...numberOfShapes), id: \.self){ index in
+                switch card.content.shape {
+                case .diamond:
+                    diamond
+                case .squiggle:
+                    squiggle
+                case .oval:
+                    oval
+                }
+            }
+        }
+        .padding()
     }
     
     var diamond: some View {
@@ -222,7 +249,7 @@ struct CardView:View {
                 Diamond()
                     .foregroundColor(shapeColor)
             }
-               
+            
         }
         .aspectRatio(2/3, contentMode: .fit)
         .opacity(card.content.shading == CardContent.Shading.striped ? 0.3 : 1)
