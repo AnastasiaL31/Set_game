@@ -11,7 +11,7 @@ import SwiftUI
 
 class SetGameVM : ObservableObject{
     
-    @Published private var setGame: SetGame = SetGame()
+    @Published private var setGame: SetGame
     
     var cards: Array<Card> {
         return setGame.cards.filter { card in
@@ -19,15 +19,31 @@ class SetGameVM : ObservableObject{
         }
     }
     
+    init(){
+        setGame = SetGame()
+    }
+    
     var isSetSelected = false
     var isSetMatched = false
     
     func startNewGame(){
         setGame.startNewGame()
+        isSetMatched = false
+        isSetSelected = false
     }
     
-    func addThreeMoreCards(){
-        if cards.count < 24{
+    func shuffle(){
+        setGame.shuffle()
+    }
+    
+    func addThreeMoreCards(replace: Bool){
+        if replace {
+            if isSetSelected && isSetMatched{
+                setGame.addAndReplaceThreeMoreCards()
+                isSetSelected = false
+                isSetMatched = false
+            }
+        }else if cards.count < 24 {
             setGame.addThreeMoreCards()
         }
     }

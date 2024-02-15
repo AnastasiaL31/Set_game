@@ -7,70 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FDF56832-D5B6-451B-8725-D184F468CA0E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Set_game/SetGame.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "replaceWithOneNewCard(at:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Set_game/SetGame.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "replaceWithOneNewCard(at:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD - b20b4772347249ca"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Set_game.SetGame.addOneMoreCard(at: Swift.Int) -&gt; ()"
-                  moduleName = "Set_game"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "97">
-               </Location>
-               <Location
-                  uuid = "7788A967-0090-4B29-9091-B2CEB747B4BD - 1a7ec05c756336ad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Set_game.Card) -&gt; Swift.Bool in Set_game.SetGame.addOneMoreCard(at: Swift.Int) -&gt; ()"
-                  moduleName = "Set_game"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/SetGame.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "19">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "90F4BA52-85DC-46DF-B62A-9F5914C1EBCC"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -78,8 +14,8 @@
             filePath = "Set_game/SetGame.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "choose(card:)"
             landmarkType = "7">
             <Locations>
@@ -126,9 +62,215 @@
             filePath = "Set_game/SetGame.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "choose(card:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "04833267-D576-4BE2-A73B-6B81482DD2A9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "cards"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "04833267-D576-4BE2-A73B-6B81482DD2A9 - 335d3809bca8ee47"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Set_game.ContentView.cards.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "33">
+               </Location>
+               <Location
+                  uuid = "04833267-D576-4BE2-A73B-6B81482DD2A9 - d469d8a61069d905"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Set_game.Card) -&gt; &lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0 in Set_game.ContentView.cards.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "355">
+               </Location>
+               <Location
+                  uuid = "04833267-D576-4BE2-A73B-6B81482DD2A9 - 335d3809bca8ee47"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Set_game.ContentView.cards.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  uuid = "04833267-D576-4BE2-A73B-6B81482DD2A9 - 8aa71f8f8e48bd80"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Set_game.Card) -&gt; Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt; in Set_game.ContentView.cards.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "490">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F157A6B-31D6-4A75-B873-0F268887CD3D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "deck"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "3F157A6B-31D6-4A75-B873-0F268887CD3D - 1fcb66b9c4da0f20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Set_game.ContentView.deck.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "298">
+               </Location>
+               <Location
+                  uuid = "3F157A6B-31D6-4A75-B873-0F268887CD3D - e215f08e07bc708"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.ForEach&lt;Swift.Array&lt;Set_game.Card&gt;, Swift.Int, Set_game.CardView&gt;, SwiftUI.RoundedRectangle)&gt; in Set_game.ContentView.deck.getter : some"
+                  moduleName = "Set_game"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/Set_game/Set_game/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "236">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "187FAD5B-3F43-41BF-97B0-8655FD6860B7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "addThreeMoreCards()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8B68563-A440-4D66-9A3C-E7F5E417A666"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "dealCards()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0996B6AD-84FE-4DD2-8622-FF3B2B80DB00"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "addAndReplaceThreeMoreCards()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "11C6173A-784E-46FF-965F-052BFF5DE471"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "addAndReplaceThreeMoreCards()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "129DA20E-4CD0-4483-941D-3A0F3DEA6CE7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Set_game/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "shuffle()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

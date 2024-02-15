@@ -10,8 +10,8 @@ import SwiftUI
 
 struct SetGame {
     
-    private(set) var cards: Array<Card>
-    private var content: Array<CardContent>
+    private(set) var cards: Array<Card> = []
+    private var content: Array<CardContent> = []
     
     private var numberOfChosenCards: Int {
         get{
@@ -26,13 +26,8 @@ struct SetGame {
     }
     
     init() {
-        cards = []
-        content = []
-        CreateCardsContent()
-        for numberOnCard in content.indices{
-            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))    
-        }
-        cards.shuffle()
+        createCards()
+        
     }
     
     private mutating func CreateCardsContent(){
@@ -47,21 +42,37 @@ struct SetGame {
         }
     }
     
-     mutating func startNewGame(){
-         cards.shuffle()
-         cards.indices.forEach {
-             cards[$0].isShown = ($0 < 12)
-             cards[$0].isChosen = false
-             cards[$0].isMatched = false
-         }
+    
+    private mutating func createCards(){
+        cards.removeAll()
+        content.removeAll()
+        CreateCardsContent()
+        for numberOnCard in content.indices{
+            cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
+        }
+        cards.shuffle()
+        for num in 0..<12 {
+            cards[num].isShown = true
+        }
     }
     
-    mutating func addThreeMoreCards(addingIndexes: Array<Int> = []){
+     mutating func startNewGame(){
+         createCards()
+    }
+    
+    mutating func shuffle() {
+        cards.shuffle()
+        cards.sort { card1, card2 in
+            card1.isShown == true && card2.isShown != true
+        }
+    }
+    
+    mutating func addThreeMoreCards(){
         if cards.contains(where: {!$0.isShown}) {
             var count = 0
             while count < 3 {
-                if var cardWithIndexToAdd = getNotShownCard(){
-                    cards[cardWithIndexToAdd.index].isShown.toggle()
+                if let cardWithIndexToAdd = cards.firstIndex(where: {!$0.isShown}){
+                    cards[cardWithIndexToAdd].isShown.toggle()
                     count += 1
                 } else {
                     return
@@ -70,29 +81,30 @@ struct SetGame {
         }
     }
     
-    func getNotShownCard() -> (card: Card, index: Int)? {
-        if cards.contains(where: {!$0.isShown}) {
-            while true {
-                let randomIndex = Int.random(in: cards.indices)
-                if !cards[randomIndex].isShown {
-                    return (card: cards[randomIndex], index: randomIndex)
+    mutating func addAndReplaceThreeMoreCards(){
+        let replacingIndexes = getChosenMatchedCards()
+        if replacingIndexes.count == 3 {
+            if cards.contains(where: {!$0.isShown}) {
+                var count = 0
+                while count < 3 {
+                    if let cardIndexToAdd = cards.firstIndex(where: {!$0.isShown}){
+                        var card = cards[cardIndexToAdd]
+                        card.isShown.toggle()
+                        cards[replacingIndexes[count]] = card
+                        cards.remove(at: cardIndexToAdd)
+                        count += 1
+                    } else {
+                        return
+                    }
                 }
             }
         }
-        return nil
     }
     
-    mutating func replaceWithOneNewCard(at index: Int) {
-        if cards.contains(where: {!$0.isShown}) {
-            if cards.indices.contains(index) {
-                if var cardWithIndexToAdd = getNotShownCard(){
-                    cardWithIndexToAdd.card.isShown = true
-                    cards.insert(cardWithIndexToAdd.card, at: index)
-                    cards.remove(at: cardWithIndexToAdd.index)
-                }
-            }
-        }
+    private func getChosenMatchedCards() -> Array<Int> {
+        cards.filter { $0.isChosen && $0.isMatched && $0.isShown}.map{cards.firstIndex(of: $0) ?? -1}
     }
+    
     
     mutating func choose(card: Card) -> Bool? {
         if numberOfChosenCards < 3 {
@@ -115,13 +127,7 @@ struct SetGame {
             chosenCards.forEach { card in
                 if let realCardIndex = cards.findCardIndex(card: card) {
                     if cards[realCardIndex].isMatched {
-                        if let notShownCardWithIndex = getNotShownCard() {
-                            cards[realCardIndex] = notShownCardWithIndex.card
-                            cards[realCardIndex].isShown = true
-                            cards.removeAll(where: {$0 == notShownCardWithIndex.card})
-                        }else {
                             cards.remove(at: realCardIndex)
-                        }
                     }else {
                         cards[realCardIndex].isChosen = false
                     }
@@ -134,23 +140,18 @@ struct SetGame {
         return nil
     }
     
-    func checkForSet() -> Bool{
-        var numbers : Set<Int>  = []
-        var shapes : Set<CardContent.Shape> = []
-        var shadings : Set<CardContent.Shading>  = []
-        var colors : Set<CardContent.ShapeColor>  = []
-        chosenCards.forEach{
-            numbers.insert($0.content.numberOfShapes.numOfShapes)
-            shapes.insert($0.content.shape)
-            shadings.insert($0.content.shading)
-            colors.insert($0.content.color)
-        }
+    private func checkForSet() -> Bool{
+        
+        let colors = Set(chosenCards.map({ $0.content.color}))
+        let numbers = Set(chosenCards.map({ $0.content.numberOfShapes}))
+        let shapes = Set(chosenCards.map({ $0.content.shape}))
+        let shadings = Set(chosenCards.map({ $0.content.shading}))
         return numbers.count != 2 && shapes.count != 2 && shadings.count != 2 && colors.count != 2
         }
     
 }
 
-struct Card : Equatable, Identifiable{
+struct Card : Equatable, Identifiable {
     
     let id: Int
     let content: CardContent
