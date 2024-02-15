@@ -32,6 +32,10 @@ class SetGameVM : ObservableObject{
         isSetSelected = false
     }
     
+    func shuffle(){
+        setGame.shuffle()
+    }
+    
     func addThreeMoreCards(replace: Bool){
         if replace {
             if isSetSelected && isSetMatched{

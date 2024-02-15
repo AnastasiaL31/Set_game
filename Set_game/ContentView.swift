@@ -21,8 +21,12 @@ struct ContentView: View {
                 discardPile
                 Spacer()
                 deck.foregroundColor(.blue)
-                Spacer()
-                NewGameButton
+                
+                VStack {
+                    newGameButton
+                    
+                    shuffleButton
+                }
             }
             .font(.title2)
         }
@@ -38,12 +42,20 @@ struct ContentView: View {
                         .onTapGesture {
                             choose(card)
                         }
-                        
                         .padding(4)
                 }
                 
             }
-          
+    }
+    
+    
+    var shuffleButton : some View {
+        Button {
+            viewModel.shuffle()
+        } label: {
+            Text("Shuffle")
+        }
+
     }
     
      func choose(_ card: Card){
@@ -84,9 +96,11 @@ struct ContentView: View {
             ForEach(undealtCards) { card in
                     CardView(card: card)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                   //.offset(x: 0, y: CGFloat(card.id)/4 * -1)
             }
                 RoundedRectangle(cornerRadius: 12)
                 .opacity(dealtCards.count < 81 ? 1 : 0)
+                
         }
         
         .frame(width: 100, height: 100/aspectRatio)
@@ -104,10 +118,8 @@ struct ContentView: View {
                             chosenMatchedCards.append(card)
                         }
                     }
-                    //withAnimation(.easeInOut(duration: 0.2)) {
                         discard()
-                    //}
-                    withAnimation (.easeInOut(duration: 1).delay(3)) {
+                    withAnimation (.linear(duration: 1.5).delay(5)) {
                         viewModel.addThreeMoreCards(replace: true)
                     }
                     withAnimation (.easeInOut(duration: 0.5)) {
@@ -151,14 +163,14 @@ struct ContentView: View {
     
     private func discard() {
            for card in chosenMatchedCards{
-                    withAnimation(.easeInOut(duration: 0.3)){
+                    withAnimation(.easeInOut(duration: 0.1)){
                         discardedCards.append(card)
                     }
            }
         chosenMatchedCards.removeAll()
     }
     
-    var NewGameButton : some View {
+    var newGameButton : some View {
         Button(action: {
             viewModel.startNewGame()
             dealtCards.removeAll()
@@ -195,8 +207,11 @@ struct CardView:View {
     
     @ViewBuilder
     var body: some View {
-        cardBase
-        .animation(.easeOut(duration: 0.5))
+        ZStack {
+            cardBase
+            cardContent
+        }
+        .animation(.easeOut(duration: 0.3))
         
     }
     
@@ -211,12 +226,11 @@ struct CardView:View {
 
                     if card.isChosen && (card.isMatched || mismatch != nil){
                         strokeBase
-                            .transition(.asymmetric(insertion: .scale(scale: 0.5).animation(.easeIn(duration: 0.5)), removal: .identity) )
+                            .transition(.asymmetric(insertion: .scale(scale: 0.5).animation(.easeIn(duration: 0.3)), removal: .identity) )
                     }else{
                         strokeBase
                     }
                 }
-            cardContent
         }
     }
     
@@ -234,25 +248,22 @@ struct CardView:View {
                     oval
                 }
             }
+            .aspectRatio(2/3, contentMode: .fit)
+            .opacity(card.content.shading == CardContent.Shading.striped ? 0.3 : 1)
         }
         .padding()
     }
     
     var diamond: some View {
         ZStack {
+            let base = Diamond()
             if card.content.shading == CardContent.Shading.open {
-                Diamond()
-                    .foregroundColor(.white)
-                Diamond()
-                    .stroke(shapeColor, style: StrokeStyle(lineWidth: 2))
+                base.foregroundColor(.white)
+                base.stroke(shapeColor, style: StrokeStyle(lineWidth: 2))
             }else{
-                Diamond()
-                    .foregroundColor(shapeColor)
+                base.foregroundColor(shapeColor)
             }
-            
         }
-        .aspectRatio(2/3, contentMode: .fit)
-        .opacity(card.content.shading == CardContent.Shading.striped ? 0.3 : 1)
     }
     
     var squiggle: some View {
@@ -264,26 +275,20 @@ struct CardView:View {
                     .stroke(.white, style: StrokeStyle(lineWidth: 20, lineCap: .round))
             }
         }
-        .aspectRatio(2/3, contentMode: .fit)
-        .opacity(card.content.shading == CardContent.Shading.striped ? 0.3 : 1)
     }
     
     var oval: some View{
         ZStack {
             if card.content.shading == CardContent.Shading.open {
-                Ellipse()
-                    .foregroundColor(.white)
-                Ellipse()
-                    .stroke(shapeColor, style: StrokeStyle(lineWidth: 2))
+                Ellipse().foregroundColor(.white)
+                Ellipse().stroke(shapeColor, style: StrokeStyle(lineWidth: 2))
             }else{
-                Ellipse()
-                    .foregroundColor(shapeColor)
+                Ellipse().foregroundColor(shapeColor)
             }
-                
         }
-        .aspectRatio(2/3, contentMode: .fit)
-        .opacity(card.content.shading == CardContent.Shading.striped ? 0.3 : 1)
     }
+    
+    
 }
 
 #Preview {

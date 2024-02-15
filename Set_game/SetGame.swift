@@ -51,15 +51,20 @@ struct SetGame {
             cards.append(Card(id: numberOnCard, content: content[numberOnCard]))
         }
         cards.shuffle()
-        for num in 0..<9 {
+        for num in 0..<12 {
             cards[num].isShown = true
         }
     }
     
-    // MARK: - add creation of new cards (previous were deleted)
-    
      mutating func startNewGame(){
          createCards()
+    }
+    
+    mutating func shuffle() {
+        cards.shuffle()
+        cards.sort { card1, card2 in
+            card1.isShown == true && card2.isShown != true
+        }
     }
     
     mutating func addThreeMoreCards(){
@@ -96,7 +101,7 @@ struct SetGame {
         }
     }
     
-    func getChosenMatchedCards() -> Array<Int> {
+    private func getChosenMatchedCards() -> Array<Int> {
         cards.filter { $0.isChosen && $0.isMatched && $0.isShown}.map{cards.firstIndex(of: $0) ?? -1}
     }
     
@@ -135,7 +140,7 @@ struct SetGame {
         return nil
     }
     
-    func checkForSet() -> Bool{
+    private func checkForSet() -> Bool{
         
         let colors = Set(chosenCards.map({ $0.content.color}))
         let numbers = Set(chosenCards.map({ $0.content.numberOfShapes}))
